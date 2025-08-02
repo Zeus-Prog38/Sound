@@ -24,7 +24,7 @@ local function ensureImageSoundGUI()
 
     local sound = Instance.new("Sound")
     sound.Name = "EfeitoSonoro"
-    sound.SoundId = "rbxassetid://8051095821" -- coloque o ID do som aqui
+    sound.SoundId = "rbxassetid://95724647330605" -- coloque o ID do som aqui
     sound.Looped = false
     sound.Volume = 1
     sound.Parent = playerGui
