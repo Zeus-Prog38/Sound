@@ -18,7 +18,7 @@ local function ensureImageSoundGUI()
     imageLabel.Position = UDim2.new(0, 0, 0, 0)
     imageLabel.AnchorPoint = Vector2.new(0, 0)
     imageLabel.BackgroundTransparency = 1
-    imageLabel.Image = "rbxassetid://85872075203861" -- coloque o ID da imagem aqui
+    imageLabel.Image = "rbxassetid://81833744906026" -- coloque o ID da imagem aqui
     imageLabel.ScaleType = Enum.ScaleType.Fit
     imageLabel.Parent = screenGui
 
