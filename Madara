@@ -1,0 +1,54 @@
+-- === Preparar GUI de imagem e som globalmente para reuso ===
+local function ensureImageSoundGUI()
+    local player = LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    if playerGui:FindFirstChild("ImagemESomGUI") then
+        return playerGui:FindFirstChild("ImagemESomGUI")
+    end
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "ImagemESomGUI"
+    screenGui.ResetOnSpawn = false
+    screenGui.Parent = playerGui
+
+    local imageLabel = Instance.new("ImageLabel")
+    imageLabel.Name = "ImagemCentral"
+    imageLabel.Size = UDim2.new(1, 0, 1, 0)
+    imageLabel.Position = UDim2.new(0, 0, 0, 0)
+    imageLabel.AnchorPoint = Vector2.new(0, 0)
+    imageLabel.BackgroundTransparency = 1
+    imageLabel.Image = "rbxassetid://85872075203861" -- coloque o ID da imagem aqui
+    imageLabel.ScaleType = Enum.ScaleType.Fit
+    imageLabel.Parent = screenGui
+
+    local sound = Instance.new("Sound")
+    sound.Name = "EfeitoSonoro"
+    sound.SoundId = "rbxassetid://8051095821" -- coloque o ID do som aqui
+    sound.Looped = false
+    sound.Volume = 1
+    sound.Parent = playerGui
+
+    return screenGui
+end
+
+local function mostrarComEfeitoFromGUI(gui, duracaoImagem, duracaoFade)
+    local imageLabel = gui:FindFirstChild("ImagemCentral")
+    local sound = LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("EfeitoSonoro") or gui:FindFirstChild("EfeitoSonoro") -- fallback
+    if not imageLabel then return end
+
+    local TweenService = game:GetService("TweenService")
+    imageLabel.ImageTransparency = 1
+
+    local tweenIn = TweenInfo.new(duracaoFade, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    TweenService:Create(imageLabel, tweenIn, {ImageTransparency = 0}):Play()
+
+    if sound and sound.Play then
+        sound:Play()
+    end
+
+    delay(duracaoFade + duracaoImagem, function()
+        local tweenOut = TweenInfo.new(duracaoFade, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+        TweenService:Create(imageLabel, tweenOut, {ImageTransparency = 1}):Play()
+    end)
+end
